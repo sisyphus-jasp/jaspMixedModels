@@ -775,8 +775,12 @@
     bic      = BIC(full_model)
   )
 
-  if (!lme4::isREML(full_model))
-    tempRow$deviance     <- deviance(full_model, REML = FALSE)
+  if (!lme4::isREML(full_model)) {
+    if (type == "LMM")
+      tempRow$deviance <- deviance(full_model, REML = FALSE)
+    else
+      tempRow$deviance <- deviance(full_model)
+  }
   else
     tempRow$devianceREML <- lme4::REMLcrit(full_model)
 
